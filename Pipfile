@@ -1,0 +1,20 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+diffusers = "==0.8.1"
+transformers = "==4.24.0"
+sanic = "==22.6.2"
+scipy = "==1.9.3"
+ftfy = "==6.1.1"
+accelerate = "==0.13.2"
+pydantic = "*"
+
+[dev-packages]
+ipython = "*"
+
+[requires]
+python_version = "3.8"
+python_full_version = "3.8.12"
