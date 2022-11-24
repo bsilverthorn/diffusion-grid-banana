@@ -1,3 +1,5 @@
+# type: ignore
+
 # Do not edit if deploying to Banana Serverless
 # This file is boilerplate for the http server, and follows a strict interface.
 
