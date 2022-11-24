@@ -1,0 +1,8 @@
+sanic==22.6.2
+transformers==4.24.0
+scipy==1.9.3
+ftfy==6.1.1
+accelerate==0.13.2
+
+# (need a diffusers version released after 2022-11-11)
+git+https://github.com/huggingface/diffusers.git@8171566163f0b197282786bf39de95c130eb5fa0
