@@ -113,4 +113,3 @@ def init_model(hf_auth_token: str, torch_device: str) -> StableDiffusionPipeline
     ).to(torch_device)  # type: ignore
 
     return model
-
