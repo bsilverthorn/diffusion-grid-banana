@@ -20,11 +20,11 @@ ARG HF_AUTH_TOKEN
 ENV HF_AUTH_TOKEN=$HF_AUTH_TOKEN
 
 ADD download.py .
+ADD runner.py .
 RUN python3 download.py
 
 # Add your custom app code, init() and inference()
 ADD app.py .
-ADD runner.py .
 
 EXPOSE 8000
 
