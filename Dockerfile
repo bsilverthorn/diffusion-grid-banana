@@ -23,7 +23,8 @@ ADD download.py .
 RUN python3 download.py
 
 # Add your custom app code, init() and inference()
-ADD app.py runner.py .
+ADD app.py .
+ADD runner.py .
 
 EXPOSE 8000
 
