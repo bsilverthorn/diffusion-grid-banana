@@ -13,7 +13,6 @@ from diffusers import (
 )
 from torch import (
     Tensor,
-    FloatTensor,
     Generator,
 )
 from torch.amp.autocast_mode import autocast
@@ -48,8 +47,8 @@ class ModelRunner:
             prompt: str,
             seed: int,
             trajectory_at: Set[int] = set(),
-            latents: Optional[FloatTensor] = None,
-            timestep: Optional[int] = None) -> Tuple[Any, Dict[int, FloatTensor]]:
+            latents: Optional[Tensor] = None,
+            timestep: Optional[int] = None) -> Tuple[Any, Dict[int, Tensor]]:
         # prep the prng
         if seed is not None:
             generator = Generator(self._torch_device).manual_seed(seed)

@@ -11,7 +11,7 @@ from typing import (
 import torch
 import pydantic
 
-from torch import FloatTensor
+from torch import Tensor
 from pydantic import validator
 from PIL.Image import Image
 from runner import (
@@ -42,14 +42,14 @@ def init():
         torch_device=settings.diffusion_torch_device,
     )
 
-def tensor_to_base64(tensor: FloatTensor) -> str:
+def tensor_to_base64(tensor: Tensor) -> str:
     buffered = BytesIO()
 
     torch.save(tensor, buffered)
 
     return b64encode(buffered.getvalue()).decode("utf-8")
 
-def base64_to_tensor(encoded: str) -> FloatTensor:
+def base64_to_tensor(encoded: str) -> Tensor:
     buffered = BytesIO(b64decode(encoded))
 
     return torch.load(buffered, map_location=settings.diffusion_torch_device)
@@ -65,14 +65,14 @@ class ModelIO(pydantic.BaseModel):
     class Config:
         arbitrary_types_allowed = True
         json_encoders = {
-            FloatTensor: tensor_to_base64,
+            Tensor: tensor_to_base64,
             Image: image_to_base64,
         }
 
 class ModelRunInputs(ModelIO):
     prompt: str
     seed: int
-    latents: Optional[FloatTensor]
+    latents: Optional[Tensor]
     timestep: Optional[int]
     trajectory_at: List[int]
 
@@ -85,7 +85,7 @@ class ModelInputs(ModelIO):
     run_inputs: ModelRunInputs
 
 class ModelLatentsInfo(ModelIO):
-    tensor: FloatTensor
+    tensor: Tensor
     image: Image
     timestep: int
 
@@ -122,4 +122,3 @@ def inference_typed(model_inputs: ModelInputs) -> ModelOutputs:
             ],
         ),
     )
-
