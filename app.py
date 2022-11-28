@@ -76,7 +76,7 @@ class ModelRunInputs(ModelIO):
     timestep: Optional[int]
     trajectory_at: List[int]
 
-    @validator("latents")
+    @validator("latents", pre=True)
     def latents_from_base64(cls, v):
         return None if v is None else base64_to_tensor(v)
 
