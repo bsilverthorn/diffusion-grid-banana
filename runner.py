@@ -111,4 +111,7 @@ def init_model(hf_auth_token: str, torch_device: str) -> StableDiffusionPipeline
         use_auth_token=hf_auth_token,
     ).to(torch_device)  # type: ignore
 
+    # app backend maintains a prompt safelist
+    model.run_safety_checker = lambda image, *args: (image, None)
+
     return model
