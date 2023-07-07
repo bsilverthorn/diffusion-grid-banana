@@ -30,9 +30,6 @@ class Settings(pydantic.BaseSettings):
 settings = Settings.parse_obj({})
 
 def init():
-    global model
-    global model_runner
-
     model = init_model(settings.hf_auth_token, settings.diffusion_torch_device)
     model_runner = ModelRunner(
         model,
@@ -41,6 +38,8 @@ def init():
         scheduler_eta=settings.diffusion_scheduler_eta,
         torch_device=settings.diffusion_torch_device,
     )
+
+    return (model, model_runner)
 
 def tensor_to_base64(tensor: Tensor) -> str:
     buffered = BytesIO()
@@ -98,10 +97,12 @@ class ModelOutputs(ModelIO):
     cache_key: str
     run_outputs: ModelRunOutputs
 
-def inference(model_inputs: dict) -> str:
-    return inference_typed(ModelInputs.parse_obj(model_inputs)).json()
+def inference(model_inputs: dict, model_runner: ModelRunner) -> str:
+    typed_inputs = ModelInputs.parse_obj(model_inputs)
 
-def inference_typed(model_inputs: ModelInputs) -> ModelOutputs:
+    return inference_typed(typed_inputs, model_runner).json()
+
+def inference_typed(model_inputs: ModelInputs, model_runner: ModelRunner) -> ModelOutputs:
     """Run the diffusion pipeline, optionally starting from a latents tensor."""
 
     (generated, trajectory) = model_runner.run(**model_inputs.run_inputs.dict())
