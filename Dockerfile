@@ -19,10 +19,10 @@ ADD runner.py .
 RUN python3 download.py
 
 # App code
-ADD server.py .
+ADD inference.py .
 ADD app.py .
 
 # Prep and start server
 EXPOSE 8000
 
-CMD python3 -u server.py
+CMD python3 -u app.py
